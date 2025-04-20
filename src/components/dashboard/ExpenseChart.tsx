@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
 } from "@/components/ui/chart";
@@ -53,67 +52,64 @@ export function ExpenseChart() {
     '#FACC15', // Yellow
   ];
   
+  // Fix: Changed from object with theme to proper ChartConfig type
   const config = {
-    theme: {
+    colors: {
       light: "#9B87F5", // Budget Purple
       dark: "#7E69AB", // Secondary Purple
     }
   };
   
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Despesas por Categoria</CardTitle>
-      </CardHeader>
-      <CardContent className="p-2">
-        <div className="h-80">
-          <ChartContainer config={config}>
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                  nameKey="name"
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <ChartTooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-        </div>
+    <div className="h-full p-6">
+      <h3 className="text-xl font-semibold mb-4">Despesas por Categoria</h3>
+      <div className="h-64">
+        <ChartContainer config={config}>
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                nameKey="name"
+              >
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <ChartTooltip content={<CustomTooltip />} />
+            </PieChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </div>
+      
+      <div className="mt-4">
+        <ChartLegend>
+          <ChartLegendContent />
+        </ChartLegend>
         
-        <div className="mt-4">
-          <ChartLegend>
-            <ChartLegendContent />
-          </ChartLegend>
-          
-          <div className="mt-4 space-y-1">
-            {chartData.map((item, index) => (
-              <div key={index} className="flex items-center justify-between text-sm">
-                <div className="flex items-center">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2"
-                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                  />
-                  <span>{item.name}</span>
-                </div>
-                <div className="font-medium">
-                  R$ {item.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({item.percentage}%)
-                </div>
+        <div className="mt-4 space-y-1">
+          {chartData.map((item, index) => (
+            <div key={index} className="flex items-center justify-between text-sm">
+              <div className="flex items-center">
+                <div 
+                  className="w-3 h-3 rounded-full mr-2"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                />
+                <span>{item.name}</span>
               </div>
-            ))}
-          </div>
+              <div className="font-medium">
+                R$ {item.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })} ({item.percentage}%)
+              </div>
+            </div>
+          ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

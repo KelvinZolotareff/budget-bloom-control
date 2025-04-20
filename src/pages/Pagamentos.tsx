@@ -1,30 +1,30 @@
 
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { TransactionList } from "@/components/dashboard/TransactionList";
-import { TransactionForm } from "@/components/finance/TransactionForm";
+import { PaymentsForm } from "@/components/finance/PaymentsForm";
+import { PaymentsList } from "@/components/finance/PaymentsList";
 import { Card, CardContent } from "@/components/ui/card";
 
-const Transacoes = () => {
+const Pagamentos = () => {
   return (
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-800">Transações</h1>
-          <p className="text-muted-foreground mt-1">Gerencie suas receitas e despesas</p>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-800">Controle de Pagamentos</h1>
+          <p className="text-muted-foreground mt-1">Gerencie seus pagamentos mensais e assinaturas</p>
         </div>
         
         <div className="grid gap-6 md:grid-cols-3">
           <div className="md:col-span-1">
             <Card className="border-none shadow-md">
               <CardContent className="p-6">
-                <TransactionForm />
+                <PaymentsForm />
               </CardContent>
             </Card>
           </div>
           <div className="md:col-span-2">
             <Card className="border-none shadow-md h-full">
               <CardContent className="p-6">
-                <TransactionList />
+                <PaymentsList />
               </CardContent>
             </Card>
           </div>
@@ -34,4 +34,4 @@ const Transacoes = () => {
   );
 };
 
-export default Transacoes;
+export default Pagamentos;
