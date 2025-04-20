@@ -1,4 +1,3 @@
-
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -57,7 +56,6 @@ export function InvestmentForm() {
       description: "Investimento adicionado com sucesso"
     });
     
-    // Reset form
     setName("");
     setType("");
     setValue("");
@@ -159,7 +157,6 @@ export function InvestmentList() {
     
     updateInvestmentValue(investment.id, newValue);
     
-    // Clear input
     setNewValues(prev => ({
       ...prev,
       [investment.id]: ""
@@ -294,6 +291,52 @@ export function InvestmentList() {
   );
 }
 
+const InvestmentSummary = () => {
+  const { investments } = useFinance();
+  
+  const totalInvested = investments.reduce((acc, inv) => acc + inv.value, 0);
+  const totalCurrent = investments.reduce((acc, inv) => acc + (inv.currentValue || inv.value), 0);
+  const diff = totalCurrent - totalInvested;
+  const isPositive = diff >= 0;
+  
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <Card className="bg-purple-50">
+        <CardContent className="p-4">
+          <div className="text-sm text-muted-foreground">Total Investido</div>
+          <div className="text-2xl font-bold mt-2">
+            R$ {totalInvested.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </div>
+        </CardContent>
+      </Card>
+      <Card className="bg-blue-50">
+        <CardContent className="p-4">
+          <div className="text-sm text-muted-foreground">Valor Atual</div>
+          <div className="text-2xl font-bold mt-2">
+            R$ {totalCurrent.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+          </div>
+        </CardContent>
+      </Card>
+      <Card className={isPositive ? 'bg-green-50' : 'bg-red-50'}>
+        <CardContent className="p-4">
+          <div className="text-sm text-muted-foreground">Lucro/Prejuízo</div>
+          <div className="text-2xl font-bold mt-2 flex items-center">
+            {isPositive ? (
+              <TrendingUp className="h-5 w-5 mr-1 text-green-500" />
+            ) : (
+              <TrendingDown className="h-5 w-5 mr-1 text-red-500" />
+            )}
+            <span className={`${isPositive ? 'text-green-600' : 'text-red-500'}`}>
+              {isPositive ? '+' : ''}
+              R$ {diff.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 const Investimentos = () => {
   return (
     <DashboardLayout>
@@ -313,64 +356,7 @@ const Investimentos = () => {
                 <CardTitle>Resumo</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4 md:grid-cols-3">
-                  <Card className="bg-purple-50">
-                    <CardContent className="p-4">
-                      <div className="text-sm text-muted-foreground">Total Investido</div>
-                      <div className="text-2xl font-bold mt-2">
-                        R$ {useFinance().investments.reduce((acc, inv) => acc + inv.value, 0)
-                          .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card className="bg-blue-50">
-                    <CardContent className="p-4">
-                      <div className="text-sm text-muted-foreground">Valor Atual</div>
-                      <div className="text-2xl font-bold mt-2">
-                        R$ {useFinance().investments.reduce(
-                          (acc, inv) => acc + (inv.currentValue || inv.value), 0)
-                          .toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card className={`${
-                    (() => {
-                      const totalInvested = useFinance().investments
-                        .reduce((acc, inv) => acc + inv.value, 0);
-                      const totalCurrent = useFinance().investments
-                        .reduce((acc, inv) => acc + (inv.currentValue || inv.value), 0);
-                      return totalCurrent >= totalInvested ? 'bg-green-50' : 'bg-red-50';
-                    })()
-                  }`}>
-                    <CardContent className="p-4">
-                      <div className="text-sm text-muted-foreground">Lucro/Prejuízo</div>
-                      <div className="text-2xl font-bold mt-2 flex items-center">
-                        {(() => {
-                          const totalInvested = useFinance().investments
-                            .reduce((acc, inv) => acc + inv.value, 0);
-                          const totalCurrent = useFinance().investments
-                            .reduce((acc, inv) => acc + (inv.currentValue || inv.value), 0);
-                          const diff = totalCurrent - totalInvested;
-                          const isPositive = diff >= 0;
-                          
-                          return (
-                            <>
-                              {isPositive ? (
-                                <TrendingUp className="h-5 w-5 mr-1 text-green-500" />
-                              ) : (
-                                <TrendingDown className="h-5 w-5 mr-1 text-red-500" />
-                              )}
-                              <span className={`${isPositive ? 'text-green-600' : 'text-red-500'}`}>
-                                {isPositive ? '+' : ''}
-                                R$ {diff.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                              </span>
-                            </>
-                          );
-                        })()}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <InvestmentSummary />
               </CardContent>
             </Card>
           </div>
