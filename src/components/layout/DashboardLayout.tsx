@@ -16,67 +16,42 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <FinanceProvider>
-      <div className="min-h-screen flex flex-col w-full bg-slate-50">
-        <header className="bg-gradient-to-r from-budget-purple to-purple-600 text-white py-4 px-6 shadow-md">
-          <div className="container mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold">FinControl</span>
-            </div>
-          </div>
-        </header>
-
+      <div className="min-h-screen flex flex-col w-full bg-gradient-to-br from-indigo-100 via-purple-50 to-violet-100 animate-fade-in">
         <Tabs 
           value={currentPath} 
           onValueChange={(value) => navigate(value)}
-          className="w-full bg-white border-b border-gray-200 shadow-sm"
+          className="w-full bg-white/70 border-b border-purple-200 shadow-sm"
         >
-          <div className="container mx-auto">
-            <TabsList className="bg-transparent h-14">
+          <div className="max-w-5xl mx-auto">
+            <TabsList className="bg-transparent h-14 gap-4 justify-center w-full">
               <TabsTrigger 
                 value="/" 
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-budget-purple data-[state=active]:shadow-none rounded-none h-full px-6 gap-2"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-400 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:scale-105 transition-all rounded-xl h-full px-8 gap-2"
               >
-                <Home size={18} />
+                <Home size={20} />
                 <span>Dashboard</span>
               </TabsTrigger>
               
               <TabsTrigger 
-                value="/transacoes" 
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-budget-purple data-[state=active]:shadow-none rounded-none h-full px-6 gap-2"
-              >
-                <CreditCard size={18} />
-                <span>Transações</span>
-              </TabsTrigger>
-              
-              <TabsTrigger 
-                value="/investimentos" 
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-budget-purple data-[state=active]:shadow-none rounded-none h-full px-6 gap-2"
-              >
-                <LineChart size={18} />
-                <span>Investimentos</span>
-              </TabsTrigger>
-
-              <TabsTrigger 
                 value="/objetivos" 
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-budget-purple data-[state=active]:shadow-none rounded-none h-full px-6 gap-2"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-400 data-[state=active]:to-purple-300 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:scale-105 transition-all rounded-xl h-full px-8 gap-2"
               >
-                <Target size={18} />
+                <Target size={20} />
                 <span>Objetivos</span>
               </TabsTrigger>
 
               <TabsTrigger 
                 value="/pagamentos" 
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-budget-purple data-[state=active]:shadow-none rounded-none h-full px-6 gap-2"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-400 data-[state=active]:to-pink-400 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:scale-105 transition-all rounded-xl h-full px-8 gap-2"
               >
-                <List size={18} />
+                <List size={20} />
                 <span>Pagamentos</span>
               </TabsTrigger>
             </TabsList>
           </div>
         </Tabs>
-
-        <main className="flex-1 overflow-auto">
-          <div className="container mx-auto py-6 px-4 h-full">
+        <main className="flex-1 flex items-center justify-center">
+          <div className="w-full max-w-5xl py-6 px-4 h-full">
             {children}
           </div>
         </main>
