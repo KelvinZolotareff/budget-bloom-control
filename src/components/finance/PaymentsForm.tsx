@@ -215,7 +215,7 @@ export function PaymentsForm() {
               <SelectValue placeholder="Selecione um cartão" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Nenhum</SelectItem>
+              <SelectItem value="nenhum">Nenhum</SelectItem>
               {cards.map((card) => (
                 <SelectItem key={card.id} value={card.name}>
                   {card.name}
