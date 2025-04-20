@@ -1,13 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { DashboardLayout } from "@/components/layout/DashboardLayout";
+import { FinancialSummary } from "@/components/dashboard/FinancialSummary";
+import { ExpenseChart } from "@/components/dashboard/ExpenseChart";
+import { BudgetTracker } from "@/components/dashboard/BudgetTracker";
+import { TransactionList } from "@/components/dashboard/TransactionList";
+import { SavingsGoals } from "@/components/dashboard/SavingsGoals";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <DashboardLayout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-lg text-budget-purple font-semibold">April 2025</p>
+        </div>
+        
+        <FinancialSummary />
+        
+        <div className="grid gap-6 md:grid-cols-2">
+          <ExpenseChart />
+          <BudgetTracker />
+        </div>
+        
+        <TransactionList />
+        
+        <SavingsGoals />
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
