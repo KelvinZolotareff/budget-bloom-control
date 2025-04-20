@@ -1,12 +1,10 @@
 
 import { 
-  ChartPie, 
   Home, 
   CreditCard, 
-  PiggyBank, 
-  Settings, 
   Menu,
-  DollarSign
+  DollarSign,
+  LineChart
 } from "lucide-react";
 import { 
   Sidebar as SidebarComponent, 
@@ -21,32 +19,23 @@ import {
   SidebarTrigger
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   {
-    title: "Dashboard",
+    title: "Home",
     icon: Home,
     href: "/"
   },
   {
-    title: "Transactions",
+    title: "Transações",
     icon: CreditCard,
-    href: "/transactions"
+    href: "/transacoes"
   },
   {
-    title: "Budget",
-    icon: ChartPie,
-    href: "/budget"
-  },
-  {
-    title: "Savings",
-    icon: PiggyBank,
-    href: "/savings"
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    href: "/settings"
+    title: "Investimentos",
+    icon: LineChart,
+    href: "/investimentos"
   }
 ];
 
@@ -59,7 +48,7 @@ export function Sidebar() {
         </SidebarTrigger>
         <div className="flex items-center">
           <DollarSign className="w-6 h-6 text-budget-purple" />
-          <span className="text-lg font-bold text-budget-dark ml-2">BudgetBloom</span>
+          <span className="text-lg font-bold text-budget-dark ml-2">FinControl</span>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -72,10 +61,10 @@ export function Sidebar() {
                     "flex items-center gap-2 text-base",
                     window.location.pathname === item.href && "bg-budget-purple-light text-budget-purple font-medium"
                   )}>
-                    <a href={item.href}>
+                    <Link to={item.href}>
                       <item.icon className="h-5 w-5" />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -84,7 +73,7 @@ export function Sidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4 text-xs text-muted-foreground">
-        <div>BudgetBloom © {new Date().getFullYear()}</div>
+        <div>FinControl © {new Date().getFullYear()}</div>
       </SidebarFooter>
     </SidebarComponent>
   );
